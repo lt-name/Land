@@ -2,9 +2,7 @@ package cn.smallaswater.land.lands.data;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
-import cn.nukkit.block.Block;
-import cn.nukkit.block.BlockChest;
-import cn.nukkit.block.BlockPistonBase;
+import cn.nukkit.block.*;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityHuman;
 import cn.nukkit.event.EventHandler;
@@ -13,6 +11,8 @@ import cn.nukkit.event.block.*;
 import cn.nukkit.event.entity.*;
 import cn.nukkit.event.player.*;
 import cn.nukkit.item.Item;
+import cn.nukkit.item.ItemBucket;
+import cn.nukkit.item.ItemFlintSteel;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
 import cn.nukkit.utils.TextFormat;
@@ -28,7 +28,6 @@ import cn.smallaswater.land.utils.Language;
 import cn.smallaswater.land.utils.Vector;
 
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
@@ -268,6 +267,8 @@ public class LandListener implements Listener {
 
 
 
+
+
     @EventHandler
     public void onUseChest(PlayerInteractEvent event) {
         Player player = event.getPlayer();
@@ -276,31 +277,45 @@ public class LandListener implements Listener {
             if(item == null){
                 item = Item.get(0);
             }
-            if (event.getBlock() instanceof BlockChest) {
+            try{
+                Class.forName("cn.nukkit.block.BlockBarrel");
+            }catch (Exception i){
+                if(event.getBlock() instanceof  BlockBarrel){
+                    if (notHasPermission(player, event.getBlock(), LandSetting.LOCK_CHEST)) {
+                        event.setCancelled();
+                    }
+                }
+            }
+            if(event.getBlock() instanceof BlockChest || event.getBlock() instanceof BlockShulkerBox) {
                 if (notHasPermission(player, event.getBlock(), LandSetting.LOCK_CHEST)) {
                     event.setCancelled();
                 }
             }
-            if (event.getBlock().getId() == 61 || event.getBlock().getId() == 62) {
+            if (event.getBlock() instanceof BlockFurnaceBurning) {
                 if (notHasPermission(player, event.getBlock(), LandSetting.FRAME)) {
                     event.setCancelled();
                 }
             }
-            if (item.getId() == 325) {
+            if (item instanceof ItemBucket) {
                 if (notHasPermission(player, event.getBlock(), LandSetting.BUCKET)) {
                     event.setCancelled();
                 }
+
             }
-            if (item.getId() == 259) {
+            if (item instanceof ItemFlintSteel) {
                 if (notHasPermission(player, event.getBlock(), LandSetting.IGNITE)) {
                     event.setCancelled();
                 }
+
             }
-            if (event.getBlock().getId() == 389) {
+            if (event.getBlock() instanceof BlockItemFrame) {
                 if (notHasPermission(player, event.getBlock(), LandSetting.SHOW_ITEM)) {
                     event.setCancelled();
                 }
+
             }
+
+
         }else{
             event.setCancelled();
         }
