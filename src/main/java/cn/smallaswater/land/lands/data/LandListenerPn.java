@@ -6,7 +6,6 @@ import cn.nukkit.block.BlockChest;
 import cn.nukkit.block.BlockShulkerBox;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
-import cn.nukkit.event.block.BlockPistonEvent;
 import cn.nukkit.event.player.PlayerInteractEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.Position;
