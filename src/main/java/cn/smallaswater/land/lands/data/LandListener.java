@@ -15,7 +15,6 @@ import cn.nukkit.item.ItemBucket;
 import cn.nukkit.item.ItemFlintSteel;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
-import cn.nukkit.utils.TextFormat;
 import cn.smallaswater.land.LandMainClass;
 import cn.smallaswater.land.event.player.*;
 import cn.smallaswater.land.lands.data.sub.LandSubData;
@@ -289,7 +288,7 @@ public class LandListener implements Listener {
 
             }
             */
-            if(event.getBlock() instanceof BlockChest || event.getBlock() instanceof BlockShulkerBox) {
+            if(event.getBlock() instanceof BlockChest || event.getBlock() instanceof BlockShulkerBox || event.getBlock() instanceof BlockUndyedShulkerBox) {
                 if (notHasPermission(player, event.getBlock(), LandSetting.LOCK_CHEST)) {
                     event.setCancelled();
                 }
@@ -317,7 +316,6 @@ public class LandListener implements Listener {
                 }
 
             }
-
 
         }else{
             event.setCancelled();
